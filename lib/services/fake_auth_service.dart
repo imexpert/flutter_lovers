@@ -23,4 +23,10 @@ class FakeAuthenticationService implements AuthBase {
   Future<UserModel> signInWithGoogle() {
     return Future.value(UserModel(userID: userID));
   }
+
+  @override
+  Future<UserModel> signInWithFacebook() {
+    // TODO: implement signInWithFacebook
+    throw UnimplementedError();
+  }
 }

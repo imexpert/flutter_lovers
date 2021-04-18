@@ -18,6 +18,14 @@ class SignInPage extends StatelessWidget {
     }
   }
 
+  _facebookIleGiris(BuildContext context) async {
+    final _userModel = Provider.of<UserViewModel>(context, listen: false);
+    var result = await _userModel.signInWithFacebook();
+    if (result != null) {
+      print("Oturum açan kullanıcı " + result.userID);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +62,7 @@ class SignInPage extends StatelessWidget {
               textColor: Colors.white,
               buttonIcon: Image.asset("images/facebook.png"),
               radius: 16,
-              onPressed: () {},
+              onPressed: () => _facebookIleGiris(context),
               buttonColor: Color(0xFF334D92),
             ),
             SocialLoginButton(
