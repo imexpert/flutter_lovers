@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lovers/app/sign_in/email_sifre_giris_ve_kayit.dart';
 import 'package:flutter_lovers/common_widget/social_login_button.dart';
 import 'package:flutter_lovers/viewmodel/userviewmodel.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,13 @@ class SignInPage extends StatelessWidget {
     if (result != null) {
       print("Oturum açan kullanıcı " + result.userID);
     }
+  }
+
+  void _emailveSifreGiris(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      fullscreenDialog: true,
+      builder: (context) => EmailveSifreLoginPage(),
+    ));
   }
 
   @override
@@ -74,7 +82,7 @@ class SignInPage extends StatelessWidget {
               ),
               textColor: Colors.white,
               radius: 16,
-              onPressed: () => _misafirGirisi(context),
+              onPressed: () => _emailveSifreGiris(context),
               buttonColor: Colors.purple,
             ),
             SocialLoginButton(

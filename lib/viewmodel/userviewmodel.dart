@@ -93,4 +93,37 @@ class UserViewModel with ChangeNotifier implements AuthBase {
       state = ViewState.Idle;
     }
   }
+
+  @override
+  Future<UserModel> createUserWithEmailAndPassword(
+      String email, String sifre) async {
+    try {
+      state = ViewState.Busy;
+      _user =
+          await _userRepository.createUserWithEmailAndPassword(email, sifre);
+      return _user;
+    } catch (e) {
+      debugPrint(
+          "Viewmodel => createUserWithEmailAndPassword Hata : " + e.toString());
+      return null;
+    } finally {
+      state = ViewState.Idle;
+    }
+  }
+
+  @override
+  Future<UserModel> signInWithEmailAndPassword(
+      String email, String sifre) async {
+    try {
+      state = ViewState.Busy;
+      _user = await _userRepository.signInWithEmailAndPassword(email, sifre);
+      return _user;
+    } catch (e) {
+      debugPrint(
+          "Viewmodel => createUserWithEmailAndPassword Hata : " + e.toString());
+      return null;
+    } finally {
+      state = ViewState.Idle;
+    }
+  }
 }

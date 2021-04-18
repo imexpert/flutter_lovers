@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint("çalıştım");
-    return MaterialApp(
-      title: 'Flutter Lovers',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.purple),
-      home: ChangeNotifierProvider(
-        create: (context) => UserViewModel(),
-        child: LandingPage(),
+    return ChangeNotifierProvider(
+      create: (context) => UserViewModel(),
+      child: MaterialApp(
+        title: 'Flutter Lovers',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.purple),
+        home: LandingPage(),
       ),
     );
   }
