@@ -5,9 +5,17 @@ import 'package:provider/provider.dart';
 
 class SignInPage extends StatelessWidget {
   void _misafirGirisi(BuildContext context) async {
-    final _userModel = Provider.of<UserViewModel>(context, listen: true);
+    final _userModel = Provider.of<UserViewModel>(context, listen: false);
     var result = await _userModel.signInAnonymous();
     print("Oturum açan kullanıcı " + result.userID);
+  }
+
+  _googleIleGiris(BuildContext context) async {
+    final _userModel = Provider.of<UserViewModel>(context, listen: false);
+    var result = await _userModel.signInWithGoogle();
+    if (result != null) {
+      print("Oturum açan kullanıcı " + result.userID);
+    }
   }
 
   @override
@@ -37,7 +45,7 @@ class SignInPage extends StatelessWidget {
               buttonText: "Gmail İle Giriş Yap",
               textColor: Colors.black87,
               radius: 16,
-              onPressed: () {},
+              onPressed: () => _googleIleGiris(context),
               buttonIcon: Image.asset("images/google.png"),
               buttonColor: Colors.white,
             ),

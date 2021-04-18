@@ -39,4 +39,13 @@ class UserRepository implements AuthBase {
       return await _firebaseAuthService.signOut();
     }
   }
+
+  @override
+  Future<UserModel> signInWithGoogle() async {
+    if (appMode == AppMode.DEBUG) {
+      return await _fakeAuthenticationService.signInAnonymous();
+    } else {
+      return await _firebaseAuthService.signInWithGoogle();
+    }
+  }
 }
