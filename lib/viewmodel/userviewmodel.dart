@@ -10,6 +10,7 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   ViewState _state = ViewState.Idle;
   UserRepository _userRepository = locator<UserRepository>();
   UserModel _user;
+  String emailHataMesaj, sifreHataMesaj;
 
   UserModel get user => _user;
 
@@ -98,10 +99,14 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   Future<UserModel> createUserWithEmailAndPassword(
       String email, String sifre) async {
     try {
-      state = ViewState.Busy;
-      _user =
-          await _userRepository.createUserWithEmailAndPassword(email, sifre);
-      return _user;
+      if (_emailSifreControl(email, sifre)) {
+        state = ViewState.Busy;
+        _user =
+            await _userRepository.createUserWithEmailAndPassword(email, sifre);
+        return _user;
+      } else {
+        return null;
+      }
     } catch (e) {
       debugPrint(
           "Viewmodel => createUserWithEmailAndPassword Hata : " + e.toString());
@@ -115,9 +120,13 @@ class UserViewModel with ChangeNotifier implements AuthBase {
   Future<UserModel> signInWithEmailAndPassword(
       String email, String sifre) async {
     try {
-      state = ViewState.Busy;
-      _user = await _userRepository.signInWithEmailAndPassword(email, sifre);
-      return _user;
+      if (_emailSifreControl(email, sifre)) {
+        state = ViewState.Busy;
+        _user = await _userRepository.signInWithEmailAndPassword(email, sifre);
+        return _user;
+      } else {
+        return null;
+      }
     } catch (e) {
       debugPrint(
           "Viewmodel => createUserWithEmailAndPassword Hata : " + e.toString());
@@ -125,5 +134,25 @@ class UserViewModel with ChangeNotifier implements AuthBase {
     } finally {
       state = ViewState.Idle;
     }
+  }
+
+  bool _emailSifreControl(String email, String sifre) {
+    var sonuc = true;
+
+    if (sifre.length < 6) {
+      sifreHataMesaj = "Şifre En az 6 karakter olmalıdır";
+      sonuc = false;
+    } else {
+      sifreHataMesaj = null;
+    }
+
+    if (!email.contains("@")) {
+      emailHataMesaj = "Geçersiz Email adresi";
+      sonuc = false;
+    } else {
+      emailHataMesaj = null;
+    }
+
+    return sonuc;
   }
 }
